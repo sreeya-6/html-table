@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Healthcare Application</title>
+</head>
+<body>
+    <h1>Healthcare Application</h1>
+    <form id="patientForm">
+        <label for="patientName">Patient Name:</label>
+        <input type="text" id="patientName" name="patientName"><br><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age"><br><br>
+
+        <label for="condition">Medical Condition:</label>
+        <input type="text" id="condition" name="condition"><br><br>
+
+        <button type="button" onclick="saveData()">Save</button>
+    </form>
+
+    <script>
+        function saveData() {
+            var patientName = document.getElementById("patientName").value;
+            var age = document.getElementById("age").value;
+            var condition = document.getElementById("condition").value;
+
+            var xmlData = '<?xml version="1.0" encoding="UTF-8"?>\n';
+            xmlData += '<patients>\n';
+            xmlData += '   <patient>\n';
+            xmlData += '       <name>' + patientName + '</name>\n';
+            xmlData += '       <age>' + age + '</age>\n';
+            xmlData += '       <condition>' + condition + '</condition>\n';
+            xmlData += '   </patient>\n';
+            xmlData += '</patients>';
+
+            // You can send the xmlData to the server or save it locally
+            // For simplicity, let's assume saving locally using Blob
+            var blob = new Blob([xmlData], { type: "text/xml" });
+            var link = document.createElement("a");
+            link.download = "patient_data.xml";
+            link.innerHTML = "Download XML";
+            link.href = URL.createObjectURL(blob);
+            document.body.appendChild(link);
+        }
+    </script>
+</body>
+</html>
